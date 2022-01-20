@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/users")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class UserController {
     @GetMapping
     public ResponseEntity<User> findALL(){
