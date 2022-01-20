@@ -12,18 +12,20 @@ public class User implements Serializable {
     private static final long serialVersionUID =1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String nome;
+    private String name;
+    private String email;
     private String phone;
     private String password;
 
-    public User(Long id, String maria, String s, String s1, String s2) {
+    public User() {
     }
 
-    public User() {
+    public User(Long id, String name, String email, String phone, String password) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
+        this.email = email;
         this.phone = phone;
         this.password = password;
     }
@@ -32,28 +34,36 @@ public class User implements Serializable {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
@@ -65,11 +75,11 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && Objects.equals(nome, user.nome) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
+        return id.equals(user.id) && Objects.equals(name, user.name) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, phone, password);
+        return Objects.hash(id, name, phone, password);
     }
 }
