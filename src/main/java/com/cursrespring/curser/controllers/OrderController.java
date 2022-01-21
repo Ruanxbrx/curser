@@ -1,7 +1,7 @@
 package com.cursrespring.curser.controllers;
 
-import com.cursrespring.curser.entities.User;
-import com.cursrespring.curser.services.UserService;
+import com.cursrespring.curser.entities.Order;
+import com.cursrespring.curser.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/orders")
+public class OrderController {
 
     @Autowired
-    private UserService service;
+    private OrderService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findALL(){
-        List<User> list = service.findAll();
+    public ResponseEntity<List<Order>> findALL(){
+        List<Order> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findByID(@PathVariable Long id){
-        User obj = service.findById(id);
+    public ResponseEntity<Order> findByID(@PathVariable Long id){
+        Order obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 }

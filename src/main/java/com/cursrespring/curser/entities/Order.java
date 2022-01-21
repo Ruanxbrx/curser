@@ -1,6 +1,6 @@
 package com.cursrespring.curser.entities;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +15,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
     @ManyToOne
@@ -53,6 +54,8 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
