@@ -1,5 +1,8 @@
 package com.cursrespring.curser.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.aspectj.weaver.ast.Or;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -81,6 +84,17 @@ public class Product implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+    @JsonIgnore
+    public Set<Order> getOrders(){
+        Set<Order> set =new HashSet<>();
+        for (OrderItem x: items){
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
