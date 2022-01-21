@@ -1,6 +1,7 @@
 package com.cursrespring.curser.entities;
 
 import com.cursrespring.curser.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID =1L;
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -31,7 +32,7 @@ public class OrderItem implements Serializable {
     public Order getOrder(){
         return id.getOrder();
     }
-
+    @JsonIgnore
     public void setOrder(Order order){
         id.setOrder(order);
     }
