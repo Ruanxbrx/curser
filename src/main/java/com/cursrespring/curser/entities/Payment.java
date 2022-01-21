@@ -1,5 +1,7 @@
 package com.cursrespring.curser.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,6 +15,8 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant moment;
+
+    @JsonIgnore
     @ManyToOne
     @MapsId
     private Order order;
