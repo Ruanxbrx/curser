@@ -1,5 +1,7 @@
 package com.cursrespring.curser.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,7 +18,7 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category() {
@@ -26,7 +28,7 @@ public class Category implements Serializable {
         this.id = id;
         this.name = name;
     }
-
+    @JsonIgnore
     public Set<Product> getProducts() {
         return products;
     }
