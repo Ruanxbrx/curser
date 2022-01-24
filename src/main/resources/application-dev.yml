@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/springboot_curse
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+server:
+  port: '8090'
+jwt:
+  secret: MYJWTSECRET
+  expiration: '3600000'

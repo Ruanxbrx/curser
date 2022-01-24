@@ -1,16 +1,5 @@
 spring:
-  profiles:
-    active: test
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    username: sa
-    password:
-    url: jdbc:h2:mem:test-seap
   jpa:
-    show-sql: true
-    generate-ddl: true
-server:
-  port: 8090
+    open-in-view: 'true'
+  profiles:
+    active: dev
