@@ -2,8 +2,11 @@ package com.cursrespring.curser.services;
 
 import com.cursrespring.curser.entities.User;
 import com.cursrespring.curser.repositories.UserRepository;
+import com.cursrespring.curser.services.exceptions.DatabaseExepetion;
 import com.cursrespring.curser.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +32,16 @@ public class UserService {
     }
 
     public void delete (Long id){
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+           throw new ResourceNotFoundException(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DatabaseExepetion(e.getMessage());
+
+        }
     }
 
     public User update (Long id, User obj){
