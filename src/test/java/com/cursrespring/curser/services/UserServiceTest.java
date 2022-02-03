@@ -2,8 +2,6 @@ package com.cursrespring.curser.services;
 
 import com.cursrespring.curser.entities.User;
 import com.cursrespring.curser.repositories.UserRepository;
-
-
 import com.cursrespring.curser.services.exceptions.DatabaseExepetion;
 import com.cursrespring.curser.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
