@@ -16,11 +16,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -119,18 +121,30 @@ public class UserServiceTest {
         User u1 = instanciarUsuario();
         User u2 = new User(1L, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
+        when(repository.getOne(any())).thenReturn(u1);
+        when(repository.save(any())).thenReturn(u2);
         //execução
-        updateData(u1,u2);
+        User usuarioAtualizado = service.update(1L,u2);
 
         //verificaçã
-        assertEquals(u1,u2);
+        assertEquals(usuarioAtualizado,u2);
     }
 
-    private void updateData(User entity, User obj) {
-        entity.setName(obj.getName());
-        entity.setEmail(obj.getEmail());
-        entity.setPhone(obj.getPhone());
+    @Test
+    @DisplayName("Deve atualizar um usuario pelo Id e novos atributos")
+    void deveAtualizarUmUsuarioNaoEncontradoCapturarExecao(){
+        //cenario
+        User u1 = instanciarUsuario();
+        User u2 = new User(1L, "Alex Green", "alex@gmail.com", "977777777", "123456");
+
+        doThrow(EntityNotFoundException.class).when(repository).getOne(any());
+
+        //verificaçã
+        assertThatExceptionOfType(DatabaseExepetion.class).isThrownBy(() ->
+                service.update(1L,u2));
+
     }
+
     private User instanciarUsuario(){
         return new User(1L, "Maria Brown", "maria@gmail.com", "988888888", "123456");
     }
