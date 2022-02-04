@@ -148,5 +148,4 @@ public class UserServiceTest {
         List<User> usuarios = Arrays.asList(instanciarUsuario(),instanciarUsuario());
         return usuarios;
     }
-
 }
