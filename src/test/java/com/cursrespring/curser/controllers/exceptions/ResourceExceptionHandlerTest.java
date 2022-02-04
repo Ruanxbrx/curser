@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
 @ControllerAdvice
-public class ResourceExceptionHandler {
+public class ResourceExceptionHandlerTest {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardErrorTest> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
         String error = "Resource not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError err = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+        StandardErrorTest err = new StandardErrorTest(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 
     @ExceptionHandler(DatabaseExepetion.class)
-    public ResponseEntity<StandardError> database(DatabaseExepetion e, HttpServletRequest request){
+    public ResponseEntity<StandardErrorTest> database(DatabaseExepetion e, HttpServletRequest request){
         String error = "Database error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = new StandardError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+        StandardErrorTest err = new StandardErrorTest(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }
