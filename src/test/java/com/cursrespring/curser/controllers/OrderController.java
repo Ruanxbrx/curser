@@ -1,7 +1,7 @@
 package com.cursrespring.curser.controllers;
 
-import com.cursrespring.curser.entities.Category;
-import com.cursrespring.curser.services.CategoryService;
+import com.cursrespring.curser.entities.Order;
+import com.cursrespring.curser.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryController {
+@RequestMapping(value = "/orders")
+public class OrderController {
 
     @Autowired
-    private CategoryService service;
+    private OrderService service;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findALL(){
-        List<Category> list = service.findAll();
+    public ResponseEntity<List<Order>> findALL(){
+        List<Order> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> findByID(@PathVariable Long id){
-        Category obj = service.findById(id);
+    public ResponseEntity<Order> findByID(@PathVariable Long id){
+        Order obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 }
