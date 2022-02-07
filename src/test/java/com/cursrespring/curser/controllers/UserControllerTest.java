@@ -8,7 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -17,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -27,6 +31,8 @@ public class UserControllerTest {
 
     @InjectMocks
     private UserController controller;
+
+
 
     @Test
     @DisplayName("Deve retornar um responseEntity lista de usuarios")
@@ -59,27 +65,28 @@ public class UserControllerTest {
     @DisplayName("Deve inserir um  usuario")
     void deveInserirUmUsuario(){
         //cenario
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
         User obj = instanciarUsuario();
         when(service.insert(any())).thenReturn(obj);
 
-        URI location = intanciarURI(obj);
-
-        ResponseEntity<Object> response = ResponseEntity.created(location).body(obj);
-
         //execução
+        ResponseEntity<User> objInserido = controller.insert(obj);
 
-        //verificação
-        assertEquals(controller.insert(obj),response);
+        //verificaçao
+        assertEquals(objInserido.getBody(),obj);
     }
-//
-//    @PostMapping
-//    public ResponseEntity<User> insert(@RequestBody User obj){
-//        obj = service.insert(obj);
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(obj.getId()).toUri();
-//        return ResponseEntity.created(uri).body(obj);
-//    }
-//
+
+    @Test
+    @DisplayName("Deve deletar um User pelo Id informado")
+    void deveDeletarUmUserPorId(){
+        ResponseEntity<Void> obj =controller.delete(1L);
+        assertEquals(obj,ResponseEntity.noContent().build());
+
+    }
+
+
 //    @DeleteMapping(value = "/{id}")
 //    public ResponseEntity<Void> delete(@PathVariable Long id){
 //        service.delete(id);
@@ -99,6 +106,9 @@ public class UserControllerTest {
         return usuarios;
     }
     private URI intanciarURI(User obj) {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
         return  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(obj.getId()).toUri();
     }
