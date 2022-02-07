@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -81,23 +81,30 @@ public class UserControllerTest {
     @Test
     @DisplayName("Deve deletar um User pelo Id informado")
     void deveDeletarUmUserPorId(){
+        //execução
         ResponseEntity<Void> obj =controller.delete(1L);
+
+        //verificação
         assertEquals(obj,ResponseEntity.noContent().build());
 
     }
 
+    @Test
+    @DisplayName("Deve atualizar um Usuario pelo Id informado")
+    void deveAtualizarUmUserPorId(){
+        //cenario
+        User obj = instanciarUsuario();
+        when(service.update(anyLong(),any())).thenReturn(obj);
 
-//    @DeleteMapping(value = "/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable Long id){
-//        service.delete(id);
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
-//        obj = service.update(id,obj);
-//        return ResponseEntity.ok().body(obj);
-//    }
+        //execução
+        ResponseEntity<User> objAtualizado =controller.update(1L,obj);
+
+        //verficação
+        assertEquals(obj,objAtualizado.getBody());
+
+
+    }
+
     private User instanciarUsuario(){
     return new User(1L, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 }

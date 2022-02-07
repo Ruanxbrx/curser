@@ -1,7 +1,6 @@
 package com.cursrespring.curser.services;
 
 import com.cursrespring.curser.entities.Category;
-import com.cursrespring.curser.entities.Product;
 import com.cursrespring.curser.repositories.CategoryRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
